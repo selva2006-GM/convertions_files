@@ -1,93 +1,97 @@
-import csv
-import json
-from reportlab.pdfgen import canvas
+import tkinter as tk
+from tkinter import messagebox
+from tkinter import filedialog
 
+class MediaUI:
 
-class FileConverter:
-
-    def txt_to_pdf(self, input_file, output_file):
-
-        with open(input_file, "r") as file:
-            lines = file.readlines()
-
-        pdf = canvas.Canvas(output_file)
-
-        y = 800
-
-        for line in lines:
-            pdf.drawString(50, y, line.strip())
-            y -= 20
-
-        pdf.save()
-
-        print("TXT converted to PDF successfully!")
-
-
-
-    def csv_to_json(self, input_file, output_file):
-
-        data = []
-
-        with open(input_file, "r") as file:
-
-            reader = csv.DictReader(file)
-
-            for row in reader:
-                data.append(row)
-
-        with open(output_file, "w") as file:
-            json.dump(data, file, indent=4)
-
-        print("CSV converted to JSON successfully!")
-
-
-
-    def txt_to_md(self, input_file, output_file):
-
-        with open(input_file, "r") as file:
-            content = file.read()
-
-        with open(output_file, "w") as file:
-            file.write("# Converted Markdown File\n\n")
-            file.write(content)
-
-        print("TXT converted to MD successfully!")
-
-
-
-class UserInterface:
-
-    def __init__(self):
-
-        self.converter = FileConverter()
-
-
-
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Media Manager")
+        self.root.geometry("500x350")
+        self.root.config(bg="#1e1e2f")
+        self.menu()
     def menu(self):
+        self.title = tk.Label(
+            root,
+            text="Choose a Category",
+            font=("Arial", 22, "bold"),
+            bg="#1e1e2f",
+            fg="white"
+        )
+        self.title.pack(pady=25)
 
-        print("\n===== FILE CONVERTER =====")
-        print("1. TXT -> PDF")
-        print("2. CSV -> JSON")
-        print("3. TXT -> MD")
+        self.button_frame = tk.Frame(root, bg="#1e1e2f")
+        self.button_frame.pack(pady=20)
 
-        choice = int(input("Enter your choice: "))
+        rootbuttons = [
+            ("Documents", self.documents),
+            ("Image", self.image),
+            ("Video", self.video),
+            ("Audio", self.audio)
+        ]
 
-        input_file = input("Enter input file name: ")
-        output_file = input("Enter output file name: ")
+        row = 0
+        col = 0
 
-        if choice == 1:
-            self.converter.txt_to_pdf(input_file, output_file)
+        for text, command in rootbuttons:
+            btn = tk.Button(
+                self.button_frame,
+                text=text,
+                command=command,
+                width=25,
+                height=3,
+                font=("Arial", 12, "bold"),
+                bg="#4a90e2",
+                fg="white",
+                activebackground="#357abd",
+                cursor="hand2"
+            )
 
-        elif choice == 2:
-            self.converter.csv_to_json(input_file, output_file)
+            btn.grid(row=row, column=col, padx=15, pady=15)
+            row += 1
 
-        elif choice == 3:
-            self.converter.txt_to_md(input_file, output_file)
+    def documents(self):
+        self.remove()
+        self.title.config(
+            text = "Select Document",
+            font = ("Arial", 20, "bold"),
+            fg = "white",
+            bg="black"
+        )
+        btn = tk.Button(
+                self.button_frame,
+                text="Select the file",
+                command=self.select_file,
+                width=25,
+                height=3,
+                font=("Arial", 12, "bold"),
+                bg="#4a90e2",
+                fg="white",
+                activebackground="#357abd",
+                cursor="hand2"
+            )
 
-        else:
-            print("Invalid choice!")
+        btn.grid(row=4, column=4, padx=15, pady=15)
+        
+    def select_file(self):
+        file_path = filedialog.askopenfilename()
+        print("file path : ", file_path)
+        print("file type: ", file_path.split(".")[1])
+        
+    def remove(self):
+        for widget in self.button_frame.winfo_children():
+            widget.destroy()
+
+    def image(self):
+        messagebox.showinfo("Image", "Image Button Clicked")
+
+    def video(self):
+        messagebox.showinfo("Video", "Video Button Clicked")
+
+    def audio(self):
+        messagebox.showinfo("Audio", "Audio Button Clicked")
 
 
-
-obj = UserInterface()
-obj.menu()
+root = tk.Tk()
+app = MediaUI(root)
+root.mainloop()
