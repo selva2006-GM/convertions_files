@@ -1,19 +1,14 @@
 import tkinter as tk
 from collections import deque
 from tkinterdnd2 import DND_FILES, TkinterDnD
+from tkinter import ttk
 from PIL import Image, ImageTk
 import os
-import win32gui
-import win32ui
-import win32con
-import win32api
-from win32com.shell import shell, shellcon
+from tkinter.filedialog import askopenfilename
 
 stack = deque()
 class Gui:
-    
-    
-    
+
     def __init__(self, root):
         self.root = root
         
@@ -23,7 +18,12 @@ class Gui:
         self.root.resizable(False, False)
         self.stack = deque()
         
-        
+        self.formats = {
+    "doc": ["pdf", "txt", "docx"],
+    "img": ["png", "jpg", "jpeg", "gif"],
+    "vid": ["mp4", "mkv", "avi"],
+    "aud": ["mp3", "wav", "aac"]
+}
         self.mainscreen()
         
     def mainscreen(
@@ -124,7 +124,7 @@ class Gui:
         texttitle = "Document Section"
 
         buttons = [
-            ("Select Document", self.select_document)
+            ("Select Document", lambda : self.select_document("doc"))
         ]
 
         self.mainscreen(texttitle, buttons)
@@ -133,7 +133,7 @@ class Gui:
         texttitle = "Image Section"
 
         buttons = [
-            ("Select Image", self.select_document)
+            ("Select Image", lambda : self.select_document("img"))
         ]
 
         self.mainscreen(texttitle, buttons)
@@ -141,7 +141,7 @@ class Gui:
         texttitle = "video Section"
 
         buttons = [
-            ("Select Video", self.select_document)
+            ("Select Video",lambda : self.select_document("vid"))
         ]
 
         self.mainscreen(texttitle, buttons)
@@ -149,129 +149,50 @@ class Gui:
         texttitle = "Audio Section"
 
         buttons = [
-            ("Select Document", self.select_document)
+            ("Select Document", lambda :  self.select_document("aud"))
         ]
 
         self.mainscreen(texttitle, buttons)
-    def select_document(self):
+    def select_document(self, filetype = "doc"):
         
+        file_path = askopenfilename()
         
-    #     self.clear_frame()
+        extension = os.path.splitext(file_path)[1]
+        
+        self.select_btn = self.create_button("select the format",lambda : self.select_format(file_path, extension, filetype))
+        self.select_btn.grid(
+                row=10,
+                column=0,
+                padx=20,
+                pady=15
+            )
+        
+    def select_format(self, file_path, extension, filetype):
+        options = self.formats[filetype]
 
-    #     self.title = tk.Label(
-    #         self.root,
-    #         text="Drop File",
-    #         font=("Arial", 24, "bold"),
-    #         bg="#1e1e2f",
-    #         fg="white"
-    #     )
+        self.selected = tk.StringVar()
 
-    #     self.title.pack(pady=20)
+        self.dropdown = ttk.Combobox(
+            self.frame,
+            textvariable=self.selected,
+            values=options,
+            state="readonly"
+        )
 
-    #     self.frame = tk.Frame(
-    #         self.root,
-    #         bg="#1e1e2f"
-    #     )
-
-    #     self.frame.pack(expand=True)
-
-    #     self.drop_label = tk.Label(
-    #         self.frame,
-    #         text="Drop File Here",
-    #         font=("Arial", 16),
-    #         bg="lightgray",
-    #         width=30,
-    #         height=5
-    #     )
-
-    #     self.drop_label.pack(pady=20)
-
-    #     self.icon_label = tk.Label(
-    #         self.frame,
-    #         bg="#1e1e2f"
-    #     )
-
-    #     self.icon_label.pack()
-
-    #     self.drop_label.drop_target_register(DND_FILES)
-
-    #     self.drop_label.dnd_bind(
-    #         "<<Drop>>",
-    #         self.drop_file
-    #     )
-    # def drop_file(self, event):
-
-    #     file_path = event.data.strip("{}")
-
-    #     print(file_path)
-
-    #     photo = self.get_file_icon(file_path)
-
-    #     if photo:
-
-    #         self.icon_label.config(image=photo)
-
-    #         self.icon_label.image = photo
-    
-    # def get_file_icon(self, file_path):
-
-    #     flags = (
-    #         shellcon.SHGFI_ICON |
-    #         shellcon.SHGFI_LARGEICON
-    #     )
-
-    #     result = shell.SHGetFileInfo(
-    #         file_path,
-    #         0,
-    #         flags
-    #     )
-
-    #     hicon = result[0]
-
-    #     if hicon == 0:
-    #         return None
-
-    #     hdc = win32ui.CreateDCFromHandle(
-    #         win32gui.GetDC(0)
-    #     )
-
-    #     hbmp = win32ui.CreateBitmap()
-
-    #     hbmp.CreateCompatibleBitmap(hdc, 64, 64)
-
-    #     hdc_mem = hdc.CreateCompatibleDC()
-
-    #     hdc_mem.SelectObject(hbmp)
-
-    #     win32gui.DrawIconEx(
-    #         hdc_mem.GetHandleOutput(),
-    #         0,
-    #         0,
-    #         hicon,
-    #         64,
-    #         64,
-    #         0,
-    #         None,
-    #         win32con.DI_NORMAL
-    #     )
-
-    #     bmpinfo = hbmp.GetInfo()
-
-    #     bmpstr = hbmp.GetBitmapBits(True)
-
-    #     image = Image.frombuffer(
-    #         'RGBA',
-    #         (
-    #             bmpinfo['bmWidth'],
-    #             bmpinfo['bmHeight']
-    #         ),
-    #         bmpstr,
-    #         'raw',
-    #         'BGRA',
-    #         0,
-    #         1
-    #     )
-
-    #     win32gui.DestroyIcon(hicon)
-
-    #     return ImageTk.PhotoImage(image)
+        self.dropdown.grid(
+                row=10,
+                column=0,
+                padx=20,
+                pady=15
+            )
+        
+        btn = self.create_button("start convertion",lambda :  self.convertion(file_path, extension, self.selected))
+        btn.grid(
+                row=14,
+                column=0,
+                padx=20,
+                pady=15
+            )
+        
+    def convertion(self,file_path, extension, selected):
+        print("starting convertion")
