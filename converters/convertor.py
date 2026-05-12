@@ -1,84 +1,53 @@
-import fitz
-from docx import Document
+from tkinter.filedialog import asksaveasfilename
+import subprocess
+import os
 
 
 class FileConverter:
 
-    def pdf_to_txt(self, input_file, output_file):
+    def __init__(self, input_file, selected, category):
 
-        pdf = fitz.open(input_file)
+        self.input_file = input_file
+        self.output_format = selected
+        self.category = category
 
-        text = ""
+        if self.category == "doc":
+            self.document_converter()
 
-        for page in pdf:
-            text += page.get_text()
+    def document_converter(self):
 
-        pdf.close()
+        output_file = asksaveasfilename(
+            defaultextension=f".{self.output_format}",
+            filetypes=[
+                (f"{self.output_format.upper()} files",
+                 f"*.{self.output_format}")
+            ]
+        )
 
-        with open(output_file, "w", encoding="utf-8") as file:
-            file.write(text)
+        if not output_file:
+            print("Cancelled")
+            return
 
-        print("PDF → TXT completed!")
+        output_dir = os.path.dirname(output_file)
 
-    def docx_to_txt(self, input_file, output_file):
+        subprocess.run([
+            r"C:\Program Files\LibreOffice\program\soffice.exe",
+            "--headless",
+            "--convert-to",
+            self.output_format,
+            self.input_file,
+            "--outdir",
+            output_dir
+        ])
 
-        doc = Document(input_file)
+        # LibreOffice creates file automatically
+        old_output = os.path.join(
+            output_dir,
+            os.path.splitext(
+                os.path.basename(self.input_file)
+            )[0] + f".{self.output_format}"
+        )
 
-        text = ""
+        os.rename(old_output, output_file)
 
-        for para in doc.paragraphs:
-            text += para.text + "\n"
-
-        with open(output_file, "w", encoding="utf-8") as file:
-            file.write(text)
-
-        print("DOCX → TXT completed!")
-
-    def txt_to_docx(self, input_file, output_file):
-
-        with open(input_file, "r", encoding="utf-8") as file:
-            text = file.read()
-
-        doc = Document()
-
-        doc.add_paragraph(text)
-
-        doc.save(output_file)
-
-        print("TXT → DOCX completed!")
-
-    def convert(self, input_file, output_file):
-
-        input_ext = input_file.split(".")[-1].lower()
-
-        output_ext = output_file.split(".")[-1].lower()
-
-        conversion_map = {
-
-            ("pdf", "txt"): self.pdf_to_txt,
-
-            ("docx", "txt"): self.docx_to_txt,
-
-            ("txt", "docx"): self.txt_to_docx
-        }
-
-        key = (input_ext, output_ext)
-
-        if key in conversion_map:
-
-            conversion_map[key](input_file, output_file)
-
-        else:
-
-            print("Conversion not supported!")
-
-
-# MAIN
-
-converter = FileConverter()
-
-input_file = input("Enter input file: ")
-
-output_file = input("Enter output file: ")
-
-converter.convert(input_file, output_file)
+        print("Conversion completed")

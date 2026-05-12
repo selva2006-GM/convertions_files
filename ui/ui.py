@@ -1,11 +1,10 @@
 import tkinter as tk
 from collections import deque
-from tkinterdnd2 import DND_FILES, TkinterDnD
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os
 from tkinter.filedialog import askopenfilename
-
+from converters.convertor import FileConverter
 stack = deque()
 class Gui:
 
@@ -19,10 +18,38 @@ class Gui:
         self.stack = deque()
         
         self.formats = {
-    "doc": ["pdf", "txt", "docx"],
-    "img": ["png", "jpg", "jpeg", "gif"],
-    "vid": ["mp4", "mkv", "avi"],
-    "aud": ["mp3", "wav", "aac"]
+    "doc": [
+        "pdf", "txt", "docx", "doc", "rtf", "odt",
+        "xls", "xlsx", "csv",
+        "ppt", "pptx",
+        "html", "xml", "json"
+    ],
+
+    "img": [
+        "png", "jpg", "jpeg", "gif", "bmp",
+        "webp", "tiff", "ico", "svg"
+    ],
+
+    "vid": [
+        "mp4", "mkv", "avi", "mov", "wmv",
+        "flv", "webm", "mpeg", "mpg", "3gp"
+    ],
+
+    "aud": [
+        "mp3", "wav", "aac", "flac", "ogg",
+        "m4a", "wma", "aiff", "opus"
+    ],
+
+    "code": [
+        "py", "java", "cpp", "c", "js",
+        "ts", "html", "css", "php",
+        "rb", "go", "rs", "swift", "kt"
+    ],
+
+    "archive": [
+        "zip", "rar", "7z", "tar",
+        "gz", "bz2", "xz"
+    ]
 }
         self.mainscreen()
         
@@ -153,13 +180,18 @@ class Gui:
         ]
 
         self.mainscreen(texttitle, buttons)
-    def select_document(self, filetype = "doc"):
+    def select_document(self,category  = "doc"):
         
-        file_path = askopenfilename()
+        extension = " ".join(f"*.{ext}" for ext in self.formats[category])
+        file_path = askopenfilename(
+            filetypes=[
+                (f"{category} files ", extension)
+            ]
+        )
         
         extension = os.path.splitext(file_path)[1]
         
-        self.select_btn = self.create_button("select the format",lambda : self.select_format(file_path, extension, filetype))
+        self.select_btn = self.create_button("select the format",lambda : self.select_format(file_path, extension, category ))
         self.select_btn.grid(
                 row=10,
                 column=0,
@@ -167,14 +199,14 @@ class Gui:
                 pady=15
             )
         
-    def select_format(self, file_path, extension, filetype):
-        options = self.formats[filetype]
+    def select_format(self, file_path, extension, category ):
+        options = self.formats[category]
 
-        self.selected = tk.StringVar()
+        selected = tk.StringVar()
 
         self.dropdown = ttk.Combobox(
             self.frame,
-            textvariable=self.selected,
+            textvariable=selected,
             values=options,
             state="readonly"
         )
@@ -186,7 +218,7 @@ class Gui:
                 pady=15
             )
         
-        btn = self.create_button("start convertion",lambda :  self.convertion(file_path, extension, self.selected))
+        btn = self.create_button("start convertion",lambda :  self.convertion(file_path, extension, selected.get(), category))
         btn.grid(
                 row=14,
                 column=0,
@@ -194,5 +226,6 @@ class Gui:
                 pady=15
             )
         
-    def convertion(self,file_path, extension, selected):
-        print("starting convertion")
+    def convertion(self,file_path, extension, selected, category):
+        print(selected)
+        FileConverter(file_path, selected, category)
