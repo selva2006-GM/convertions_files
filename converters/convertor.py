@@ -11,7 +11,7 @@ class FileConverter:
         self.output_format = selected
         self.category = category
         
-        print("input file : ", self.input_file)
+        print("input file : ", self.input_file.split(",")[-1])
         print("output file : ", self.output_format)
         print("category : ", self.category)
         
