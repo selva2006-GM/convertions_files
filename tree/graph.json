@@ -1,0 +1,6 @@
+{
+    "txt": ["pdf", "html"],
+    "pdf": ["docx", "txt"],
+    "html": ["pdf"],
+    "docx": ["pdf"]
+}

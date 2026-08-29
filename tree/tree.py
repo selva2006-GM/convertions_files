@@ -21,13 +21,3 @@ def find_path(graph, start, target):
                 visited.add(next_type)
                 queue.append(path + [next_type])
     return None
-
-
-graph = {
-    "txt": ["pdf", "html"],
-    "pdf": ["docx", "txt"],
-    "html": ["pdf"],
-    "docx": ["pdf"]
-}
-
-
