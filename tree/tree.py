@@ -6,7 +6,8 @@ def find_path(graph, start, target):
     queue = deque([[start]])
     visited = {start}
     
-    
+    print(start)
+    print(target)
     while queue:
         path = queue.popleft()
         current = path[-1]

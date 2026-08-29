@@ -227,5 +227,4 @@ class Gui:
             )
         
     def convertion(self,file_path, extension, selected, category):
-        print(selected)
         FileConverter(file_path, selected, category)
