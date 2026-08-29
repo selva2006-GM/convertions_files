@@ -18,10 +18,3 @@ class FileConverter:
         self.current_file_type = self.input_file.split(".")[-1]
         self.output_file_type =  selected
         
-        self.graph = {
-            "txt": ["pdf", "html"],
-            "pdf": ["docx", "txt"],
-            "html": ["pdf"],
-            "docx": ["pdf"]
-        }
-        print(find_path(self.graph, self.current_file_type, self.output_file_type))
