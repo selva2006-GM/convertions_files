@@ -9,7 +9,7 @@ def find_path(graph, start, target):
     
     while queue:
         path = queue.popleft()
-        current = {start}
+        current = path[-1]
         
         
         if current == target:
@@ -31,4 +31,4 @@ graph = {
 }
 
 
-print(find_path(graph, "txt", "docx"))
+print(find_path(graph, "docx", "html"))
