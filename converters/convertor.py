@@ -12,13 +12,7 @@ class FileConverter:
         self.category = category
         self.category = category
         
-        print("input file : ", self.input_file.split(",")[-1])
-        print("output file : ", self.output_format)
-        print("category : ", self.category)
+        self.current_file_type = self.input_file.split(",")[-1]
+        self.output_file_type =  self.output_format.split(",")[-1]
         
-
-        if self.category == "doc":
-            self.document_converter()
-
-    def document_converter(self):
-        pass
+        
