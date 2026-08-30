@@ -1,0 +1,230 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Conversion Graph</title>
+
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #graph {
+            width: 90%;
+            height: 700px;
+            margin: auto;
+            border: 2px solid #333;
+            background: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>File Conversion Graph</h1>
+
+    <div id="graph"></div>
+
+    <script>
+
+        // -----------------------------
+        // YOUR DIRECTED GRAPH
+        // -----------------------------
+
+        const graph = {
+    "txt": [],
+    "pdf": [],
+    "html": [],
+    "docx": [],
+    "doc": [],
+    "rtf": [],
+    "odt": [],
+    "xls": [],
+    "xlsx": [],
+    "csv": [],
+    "ppt": [],
+    "pptx": [],
+    "xml": [],
+    "json": [],
+    
+    "png": [],
+    "jpg": [],
+    "jpeg": [],
+    "gif": [],
+    "bmp": [],
+    "webp": [],
+    "tiff": [],
+    "ico": [],
+    "svg": [],
+    
+    "mp4": [],
+    "mkv": [],
+    "avi": [],
+    "mov": [],
+    "wmv": [],
+    "flv": [],
+    "webm": [],
+    "mpeg": [],
+    "mpg": [],
+    "3gp": [],
+    
+    "mp3": [],
+    "wav": [],
+    "aac": [],
+    "flac": [],
+    "ogg": [],
+    "m4a": [],
+    "wma": [],
+    "aiff": [],
+    "opus": [],
+    
+    "py": [],
+    "java": [],
+    "cpp": [],
+    "c": [],
+    "js": [],
+    "ts": [],
+    "css": [],
+    "php": [],
+    "rb": [],
+    "go": [],
+    "rs": [],
+    "swift": [],
+    "kt": [],
+    
+    "zip": [],
+    "rar": [],
+    "7z": [],
+    "tar": [],
+    "gz": [],
+    "bz2": [],
+    "xz": []
+};
+
+
+        // -----------------------------
+        // CREATE NODES
+        // -----------------------------
+
+        const nodes = [];
+
+        for (const vertex in graph) {
+
+            nodes.push({
+                id: vertex,
+                label: vertex.toUpperCase(),
+                shape: "box"
+            });
+
+        }
+
+
+        // -----------------------------
+        // CREATE EDGES
+        // -----------------------------
+
+        const edges = [];
+
+        for (const source in graph) {
+
+            for (const target of graph[source]) {
+
+                edges.push({
+                    from: source,
+                    to: target,
+                    arrows: "to"
+                });
+
+            }
+
+        }
+
+
+        // -----------------------------
+        // VISUALIZE GRAPH
+        // -----------------------------
+
+        const nodeData = new vis.DataSet(nodes);
+        const edgeData = new vis.DataSet(edges);
+
+        const container = document.getElementById("graph");
+
+        const data = {
+            nodes: nodeData,
+            edges: edgeData
+        };
+
+
+        // -----------------------------
+        // GRAPH OPTIONS
+        // -----------------------------
+
+        const options = {
+
+            nodes: {
+                font: {
+                    size: 20
+                },
+
+                margin: 15,
+
+                borderWidth: 2
+            },
+
+            edges: {
+                smooth: {
+                    type: "curvedCW",
+                    roundness: 0.2
+                },
+
+                arrows: {
+                    to: {
+                        enabled: true,
+                        scaleFactor: 1
+                    }
+                },
+
+                font: {
+                    size: 12
+                }
+            },
+
+            physics: {
+                enabled: true,
+
+                stabilization: {
+                    iterations: 200
+                }
+            },
+
+            interaction: {
+                dragNodes: true,
+                zoomView: true,
+                dragView: true
+            }
+        };
+
+
+        const network = new vis.Network(
+            container,
+            data,
+            options
+        );
+
+    </script>
+
+</body>
+</html>
+```
