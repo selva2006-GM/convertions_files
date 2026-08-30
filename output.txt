@@ -1,0 +1,346 @@
+Spend Wise: Personal Wealth &Expense 
+Tracker 
+SUBMITTED BY: 
+Group no:- 44 
+Name:-Snawarpreet Singh 
+Name:-Lalit Kanchra 
+Registration No:-12417951 
+Registration No:- 12417480 
+Course :- PETV143(Fundamentals of data structure:Learn,apply and 
+build projects) 
+Linkedin:-https://www.linkedin.com/posts/lalit-
+kanchra-561347325_linkedin-projectshowcase-
+spendwise- 
+activity-7481225204858253312-6Yhx/ 
+Guide Name:- Dr.Ravi kant Sahu 
+ 
+ 
+ 
+ 
+School of Computer Science 
+Lovely Professional 
+University Phagwara, 
+Punjab 
+Academic session:-2024-1 
+
+Introduction 
+Problem Statement 
+Most people track their expenses manually — in notebooks, random notes app 
+entries, or basic spreadsheets — with no real structure behind it. This leads to 
+several problems: transactions pile up with no efficient way to search or 
+categorize them, there's no quick way to identify top spending categories or 
+unusual expenses, and reviewing past records (sorted by date or amount) 
+becomes slow and messy as data grows. There's a clear need for a system that 
+stores financial transactions in a structured, efficient way and lets users insert, 
+search, sort, and analyze their spending without performance bottlenecks — 
+something a plain array or basic list can't handle well at scale. 
+Objectives 
+ Design and implement a personal expense tracking system backed by 
+efficient data structures rather than naive storage. 
+ Enable fast insertion, deletion, and traversal of transaction records 
+(recent-first, chronological, or category-wise). 
+ Support quick search and lookup of transactions by category, amount, 
+or ID. 
+ Identify and surface high-priority information — like top 
+expenses or budget-threshold alerts — efficiently. 
+ Provide an undo/recent-activity mechanism for transaction actions. 
+ Generate sorted expense reports (by date/amount) for better financial 
+insight. 
+ Demonstrate practical, real-world application of core DSA 
+concepts (Linked Lists, Trees, Heaps, Hash Maps, Stacks, 
+Sorting) in a single cohesive project. 
+
+Project Modules 
+1. Transaction Management Module — (Doubly Linked List) 
+Core storage for all income/expense entries. A DLL allows efficient insertion 
+and deletion of transactions from either end, and easy forward/backward 
+traversal (e.g., "view next/previous transaction") without shifting elements like 
+an array would. 
+2. Expense Categorization & Search Module — (Binary Search Tree) 
+Transactions are organized (e.g., by amount or category key) in a BST, enabling 
+efficient search, insertion, and range-based queries — like "show all expenses 
+between ₹500–₹2000" — faster than linear scanning. 
+3. Top Expenses / Budget Alert Module — (Heap) 
+A max-heap keeps track of the highest expenses in real time, useful for instantly 
+identifying the biggest spends or triggering alerts when a transaction crosses a 
+budget threshold — without re-sorting the whole dataset. 
+4. Quick Lookup Module — (Hash Map) 
+Provides O(1) average-time lookup of transactions by a unique ID or category 
+key, used for instant retrieval/editing of a specific record instead of traversing 
+the whole structure. 
+5. Recent Activity / Undo Module — (Stack) 
+Maintains a history of recent actions (add/edit/delete) so the user can undo their 
+last transaction entry — LIFO behavior fits this naturally. 
+6. Sorting & Reports Module — (Merge Sort) 
+Generates sorted views of transactions (by date or amount) for 
+reports/summaries. Merge sort is used for its stable, guaranteed O(n log n) 
+performance regardless of input order — important since transaction data isn't 
+naturally sorted. 
+
+Technologies Used 
+ Language: C++ 
+ Core DSA Components: Doubly Linked List, Binary Search Tree, 
+Heap, Hash Map, Stack, Merge Sort 
+ Data Persistence: File handling (to save/load transaction records 
+between sessions) 
+ 
+Contribution 
+Work done by Lalit: 
+Frontend- HTML, JS(with the help of AI) to make a more enhanced version 
+of the project 
+Work done by Snawar: 
+Backend- using dsa in C++ language which contains the structures like 
+merge sort, binary seach tree and others, 
+
+MODULE DESCRIPTION 
+SpendWise is a web-based Personal Wealth & Expense Tracker designed to 
+demonstrate the practical application of core data structures and algorithms 
+(DSA). It manages user budgets and transactions entirely on the client side with 
+browser-based persistence. 
+1. Core Transaction Ledger Module 
+• 
+Data Storage: Uses a Doubly Linked List to maintain 
+chronological transaction history, enabling efficient $O(1)$ 
+insertions and smooth bi-directional traversal. 
+• 
+Sorting & Search: Implements Merge Sort to reorganize logs by 
+user preference, and Binary Search to perform rapid queries on 
+specific dates. 
+• 
+State Persistence: Implements a Hash Map for fast $O(1)$ 
+categorization lookups and utilizes browser localStorage for cross-
+session data persistence. 
+2. Analytics & Reporting Module 
+• 
+A–Z Category Ledger: Aggregates transaction data into a Binary 
+Search Tree (BST). It executes an In-order Traversal to 
+dynamically render an alphabetically sorted breakdown of user 
+spending by category. 
+• 
+Priority Expense Tracker: Feeds financial outlays into a Binary Max-
+Heap. This allows the system to efficiently extract the largest 
+expenditures one at a time to populate the "Top Expenses" widget. 
+3. Transaction Operations Module 
+• 
+Form Processing: Captures and validates user input (Date, Type, 
+Category, Amount, Notes) to update the dashboard's total income, 
+expenses, and net balance in real time. 
+• 
+Undo Engine: Employs a Stack data structure to log user actions. 
+Utilizing the Last-In, First-Out (LIFO) property, the "Undo last action" 
+button instantly reverses the last transaction and adjusts the ledger 
+seamlessly. 
+
+IMPLEMENTATION 
+ 
+What is this project? 
+Spend Wise is a C++ based console application that helps users track their 
+daily income and expenses. Instead of storing data in a simple list, it uses 
+different data structures for different tasks — making the app faster and 
+smarter as the number of transactions grows. 
+Problem Statement 
+People usually track expenses in notebooks or basic apps, which makes it 
+hard to search, sort, or analyze spending. Spend Wise solves this by using 
+proper data structures so transactions can be added, searched, sorted, and 
+reviewed quickly and efficiently. 
+Objectives 
+ Store transactions efficiently 
+ Search and filter expenses quickly 
+ Track the highest expenses automatically 
+ Allow undo of the last action 
+ Generate sorted reports (by amount/date) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Modules & Data Structures Used (Simple Explanation) 
+ 
+Module
+Data Structure
+What it does
+Search Expenses 
+Binary Search Tree 
+Quickly find transactions 
+or a range of amounts 
+(e.g., ₹500 -  ₹2000) 
+without checking every 
+record
+Track Biggest Expenses 
+Max Heap 
+Always keeps the largest 
+expense on top, so it can 
+instantly warn if budget is 
+crossed.
+Fast Record Lookup 
+Hash Map 
+Finds a transaction 
+instantly using its ID, like 
+a dictionary
+Undo Last Action 
+Stack 
+Remembers the last action 
+(add/edit/delete) so it can 
+be undone
+Sorted Reports 
+Merge Sort 
+Arrange all transactions in 
+order by amount or data 
+for clean reports
+ 
+
+     Technologies Used 
+ Language: C++ 
+ Concepts: Doubly Linked List, Binary Search Tree, Heap, Hash Map, 
+Stack, Merge Sort 
+ Storage: File handling (to save data between runs) One-Line 
+Summary 
+Spend Wise takes a real-life problem (managing money) and solves it 
+using core DSA concepts — turning theory into a practical, working 
+project. 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+SCREESNSHOTS OF PROJECT 
+ 
+ 
+This is overall page of our project. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Here we can set the monthly budget , and the line shows that how much percent 
+of monthly budget has been spent. 
+
+ 
+Here, Total income and Total expense of the month is calculated that is 
+Total income - Total Expense and not shows the Balance. 
+At the middle , category report shows the amount of money spent like on 
+bills, rent or any other . 
+At the bottom, it shows the top expenses which can top 3, top 5 or top 10 
+depends on our with how many we want to see. 
+
+ 
+ 
+ 
+In this column , we can add the transaction with date,Type (expense or 
+income),Category ,Amount of money and moreover note which is optional. 
+ 
+ 
+ 
+ 
+In this column, we can see the transaction history using search by date 
+option, we can sort the history in Insertion sort, Data - newest first or 
+oldest first , amount - high to low or low to high.Moreover, we can also 
+undo the last action whether it is income or expense. 
+
+FUTURE SCOPE 
+Graphical User Interface (GUI) 
+Currently a console-based application. This can be extended into a desktop app 
+(using Qt/JavaFX) or a web app (using React + backend APIs) for a more user-
+friendly experience. 
+Database Integration Graphical User Interface (GUI) 
+Right now transactions are stored using basic file handling. Integrating a 
+proper database (SQLite/MySQL) would allow more reliable, scalable, and 
+queryable data storage. 
+Data Visualization 
+Adding charts and graphs (pie chart for category-wise spending, line 
+graph for monthly trends) would make financial insights easier to 
+understand at a glance. 
+Multi-User Support with Authentication 
+Adding login/signup functionality (with hashed passwords) would allow the 
+app to support multiple users, each with their own separate financial records. 
+Smart Budget Predictions 
+Using basic ML techniques (like linear regression) to predict next month's 
+expenses based on past spending patterns, helping users plan better. 
+Cloud Sync & Mobile App 
+Extending the project to sync data across devices via cloud storage, and building 
+a companion mobile app for on-the-go expense tracking. 
+      Recurring Transactions & Reminders 
+Adding support for recurring expenses (like rent, subscriptions) with automatic 
+reminders/notifications before due dates. 
+Advanced Search & Filters 
+Enhancing the BST-based search to support multi-condition filters — e.g., 
+category + date range + amount range combined. 
+Export Reports 
+Allowing users to export sorted reports (from the Merge Sort module) as PDF or 
+Excel files for record-keeping or sharing.
+
+ 
+CONCLUSION 
+Spend Wise successfully demonstrates how core Data Structures and 
+Algorithms concepts can be applied to solve a real-world, everyday problem — 
+personal expense management. Rather than treating DSA as purely theoretical, 
+this project shows practical use cases: a Doubly Linked List for flexible 
+transaction storage, a Binary Search Tree for efficient searching, a Max Heap 
+for tracking top expenses, a Hash Map for instant lookups, a Stack for undo 
+functionality, and Merge Sort for generating clean, ordered reports. 
+Through this project, key learning outcomes include: 
+ Understanding how to choose the right data structure based on the 
+operation needed (insertion, search, ordering, priority-based 
+retrieval). 
+ Gaining hands-on experience in implementing these structures from 
+scratch in C++, rather than just using them theoretically. 
+ Learning to integrate multiple data structures together into a single, 
+cohesive working application. 
+ Understanding real-world software design — breaking a big problem 
+into smaller modules, each handled by the most suitable data structure. 
+Overall, this project strengthened both problem-solving skills and practical 
+C++/DSA implementation skills, while also giving exposure to how real 
+applications are structured — knowledge that is directly useful for future 
+software development and technical interviews. 
+

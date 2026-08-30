@@ -1,8 +1,6 @@
 import os
 from tree.tree import find_path
-from baseconvertor import CONVERTERS
-from basedata import graph
-
+from .baseconvertor import CONVERTERS
 
 class FileConverter:
 
@@ -20,7 +18,6 @@ class FileConverter:
         self.output_file_type = selected
 
         self.path = find_path(
-            graph,
             self.current_file_type,
             self.output_file_type
         )
@@ -32,11 +29,17 @@ class FileConverter:
                 f"to {self.output_file_type}"
             )
 
-        print("Path:", self.path)
+        print("CONVERT STARTED")
+        print("PATH:", self.path)
+
+        current_file = self.input_file
 
         for i in range(len(self.path) - 1):
+
             source = self.path[i]
             target = self.path[i + 1]
+
+            print(f"STEP: {source} -> {target}")
 
             converter = CONVERTERS.get((source, target))
 
@@ -45,6 +48,19 @@ class FileConverter:
                     f"Converter not implemented: {source} -> {target}"
                 )
 
-            print(f"Converting {source} -> {target}")
+            print("FOUND CONVERTER:", converter)
 
-            converter(self.input_file)
+            next_file = f"output.{target}"
+
+            print(f"{current_file} -> {next_file}")
+
+            converter(current_file, next_file)
+
+            print("CONVERSION FINISHED")
+
+            # VERY IMPORTANT
+            current_file = next_file
+
+        print("FINAL FILE:", current_file)
+
+        return current_file

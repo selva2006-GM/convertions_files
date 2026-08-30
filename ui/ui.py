@@ -250,6 +250,13 @@ class Gui:
             padx = 20,
             pady = 15
         )
-    def convertion(self,file_path, extension, selected, category):
+    def convertion(self, file_path, extension, selected, category):
         print(file_path, selected, category)
-        FileConverter(file_path, selected, category)
+
+        converter = FileConverter(
+            file_path,
+            selected,
+            category
+        )
+
+        converter.convert()
