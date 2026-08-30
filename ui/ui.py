@@ -199,32 +199,57 @@ class Gui:
                 pady=15
             )
         
-    def select_format(self, file_path, extension, category ):
-        options = self.formats[category]
-
+    def select_format(self, file_path, extension, category):
+        options = [
+            file_type
+            for file_cat in self.formats
+            for file_type in self.formats[file_cat]
+        ]
         selected = tk.StringVar()
-
+        
         self.dropdown = ttk.Combobox(
             self.frame,
             textvariable=selected,
             values=options,
-            state="readonly"
+            state="normal"
         )
-
+        
         self.dropdown.grid(
-                row=10,
-                column=0,
-                padx=20,
-                pady=15
-            )
+            row = 10,
+            column = 0,
+            padx = 20,
+            pady = 15
+        )
         
-        btn = self.create_button("start convertion",lambda :  self.convertion(file_path, extension, selected.get(), category))
+        def search(event):
+            typed = selected.get().lower()
+            
+            filtered = [
+                file_type
+                for file_type in options
+                if typed in file_type.lower()
+            ]
+            
+            self.dropdown["values"] = filtered
+            
+            if filtered:
+                self.dropdown.event_generate("<Down>")
+        self.dropdown.bind("<KeyRelease>", search)
+        
+        btn = self.create_button("Start convertion",
+            lambda: self.convertion(
+                file_path,
+                extension,
+                selected.get(),
+                category
+                )
+            )
         btn.grid(
-                row=14,
-                column=0,
-                padx=20,
-                pady=15
-            )
-        
+            row = 14,
+            column = 0,
+            padx = 20,
+            pady = 15
+        )
     def convertion(self,file_path, extension, selected, category):
+        print(file_path, selected, category)
         FileConverter(file_path, selected, category)

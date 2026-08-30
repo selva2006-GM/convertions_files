@@ -10,8 +10,8 @@ class FileConverter:
         self.input_file = input_file
         self.output_format = selected
         self.category = category
-        self.category = category
-        
         self.current_file_type = self.input_file.split(".")[-1]
         self.output_file_type =  selected
         
+        
+
