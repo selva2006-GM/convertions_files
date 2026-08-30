@@ -7,9 +7,6 @@ from tree.tree import find_path
 class FileConverter:
 
     def __init__(self, input_file, selected, category):
-        print("input_file :", input_file)
-        print("selected : ", selected)
-        print("category : ", category)
         self.input_file = input_file
         self.output_format = selected
         self.category = category
