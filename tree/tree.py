@@ -1,7 +1,5 @@
 from collections import deque
 
-
-
 def find_path(start, target):
     graph = {
     "txt": [],
