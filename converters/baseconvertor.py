@@ -1,6 +1,6 @@
 from reportlab.pdfgen import canvas
 import fitz
-
+from weasyprint import HTML
 
 
 def pdf_to_html(current_file, next_file):
@@ -14,12 +14,11 @@ def pdf_to_html(current_file, next_file):
         html_parts.append(page.get_text("html"))
 
     with open(next_file, "w", encoding="utf-8") as file:
-        file.write(
-            "\n".join(html_parts)
-        )
+        file.write("\n".join(html_parts))
 
     pdf.close()
-    
+
+
 def txt_to_pdf(current_file, next_file):
     print(current_file, "->", next_file)
 
@@ -76,9 +75,18 @@ def txt_to_html(current_file, next_file):
         file.write(html)
 
 
+def html_to_pdf(current_file, next_file):
+    print(current_file, "->", next_file)
+
+    HTML(filename=current_file).write_pdf(next_file)
+
+
 CONVERTERS = {
     ("txt", "pdf"): txt_to_pdf,
     ("pdf", "txt"): pdf_to_txt,
+
     ("txt", "html"): txt_to_html,
     ("pdf", "html"): pdf_to_html,
+
+    ("html", "pdf"): html_to_pdf,
 }

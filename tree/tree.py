@@ -2,9 +2,9 @@ from collections import deque
 
 def find_path(start, target):
     graph = {
-    "txt": ["pdf","html"],
+    "txt": ["pdf", "html"],
     "pdf": ["txt","html"],
-    "html": [],
+    "html": ["pdf", ],
     "docx": [],
     "doc": [],
     "rtf": [],
