@@ -1,7 +1,80 @@
 from reportlab.pdfgen import canvas
 import fitz
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+
+from PIL import Image
+from PIL.PngImagePlugin import PngInfo
 
 
+def audio_to_image(audio_path, image_path):
+    with open(audio_path, "rb") as f:
+        audio_data = f.read()
+
+    # Create a 1x1 transparent PNG
+    image = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
+
+    metadata = PngInfo()
+    metadata.add_text("audio_data", audio_data.hex())
+    metadata.add_text("audio_filename", audio_path)
+
+    image.save(image_path, "PNG", pnginfo=metadata)
+
+    return image_path
+
+
+def image_to_audio(image_path, audio_path):
+    image = Image.open(image_path)
+
+    metadata = image.info
+
+    if "audio_data" not in metadata:
+        raise ValueError(
+            "This PNG does not contain embedded audio data."
+        )
+
+    audio_data = bytes.fromhex(metadata["audio_data"])
+
+    with open(audio_path, "wb") as f:
+        f.write(audio_data)
+
+    return audio_path
+
+def audio_to_spectrogram(audio_path, output_path="spectrogram.png"):
+    audio, sample_rate = librosa.load(
+        audio_path,
+        sr=None,
+        mono=True
+    )
+
+    spectrogram = librosa.feature.melspectrogram(
+        y=audio,
+        sr=sample_rate
+    )
+
+    spectrogram_db = librosa.power_to_db(
+        spectrogram,
+        ref=max
+    )
+
+    plt.figure(figsize=(12, 5))
+
+    librosa.display.specshow(
+        spectrogram_db,
+        sr=sample_rate,
+        x_axis="time",
+        y_axis="mel"
+    )
+
+    plt.colorbar(format="%+2.0f dB")
+    plt.title("Audio Spectrogram")
+    plt.tight_layout()
+
+    plt.savefig(output_path, dpi=150)
+    plt.close()
+
+    return output_path
 
 def pdf_to_html(current_file, next_file):
     print(current_file, "->", next_file)
@@ -100,9 +173,15 @@ def jpg_to_pdf(current_file, next_file):
     pdf.close()
 
 CONVERTERS = {
-    ("txt", "pdf"): txt_to_pdf,
-    ("pdf", "txt"): pdf_to_txt,
-    ("txt", "html"): txt_to_html,
-    ("pdf", "html"): pdf_to_html,
-    ("jpg", "pdf"): jpg_to_pdf,
+    ("mp3", "png"): audio_to_image,
+    ("wav", "png"): audio_to_image,
+    ("m4a", "png"): audio_to_image,
+    ("flac", "png"): audio_to_image,
+    ("ogg", "png"): audio_to_image,
+
+    ("mp3", "jpg"): audio_to_image,
+    ("wav", "jpg"): audio_to_image,
+    ("m4a", "jpg"): audio_to_image,
+    ("flac", "jpg"): audio_to_image,
+    ("ogg", "jpg"): audio_to_image,
 }

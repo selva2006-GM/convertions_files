@@ -2,68 +2,83 @@ from collections import deque
 
 def find_path(start, target):
     graph = {
+
     "txt": ["pdf", "html"],
-    "pdf": ["txt","html"],
-    "html":[],
-    "docx":[],
+    "pdf": ["txt", "html"],
+    "html": [],
+
+    "docx": [],
     "doc": [],
     "rtf": [],
     "odt": [],
+
     "xls": [],
-    "xlsx":[],
+    "xlsx": [],
     "csv": [],
+
     "ppt": [],
-    "pptx":[],
+    "pptx": [],
+
     "xml": [],
-    "json":[],
-    "png": [],
+    "json": [],
+
+    # Images
+   "png": ["mp3", "wav", "aac", "flac", "ogg", "m4a", "wma", "aiff", "opus"],
     "jpg": ["pdf"],
-    "jpeg":[],
+    "jpeg": [],
     "gif": [],
     "bmp": [],
-    "webp":[],
-    "tiff":[],
+    "webp": [],
+    "tiff": [],
     "ico": [],
     "svg": [],
+
+    # Videos
     "mp4": [],
     "mkv": [],
     "avi": [],
     "mov": [],
     "wmv": [],
     "flv": [],
-    "webm":[],
-    "mpeg":[],
+    "webm": [],
+    "mpeg": [],
     "mpg": [],
     "3gp": [],
-    "mp3": [],
-    "wav": [],
-    "aac": [],
-    "flac":[],
-    "ogg": [],
-    "m4a": [],
-    "wma": [],
-    "aiff":[],
-    "opus":[],
-    "py":  [],
-    "java":[],
+
+    # Audio → Image
+    "mp3": ["png"],
+    "wav": ["png"],
+    "aac": ["png"],
+    "flac": ["png"],
+    "ogg": ["png"],
+    "m4a": ["png"],
+    "wma": ["png"],
+    "aiff": ["png"],
+    "opus": ["png"],
+
+    # Programming
+    "py": [],
+    "java": [],
     "cpp": [],
-    "c":   [],
-    "js":  [],
-    "ts":  [],
+    "c": [],
+    "js": [],
+    "ts": [],
     "css": [],
     "php": [],
-    "rb":  [],
-    "go":  [],
-    "rs":  [],
-"swift":   [],
-    "kt":  [],
+    "rb": [],
+    "go": [],
+    "rs": [],
+    "swift": [],
+    "kt": [],
+
+    # Archives
     "zip": [],
     "rar": [],
-    "7z":  [],
+    "7z": [],
     "tar": [],
-    "gz":  [],
+    "gz": [],
     "bz2": [],
-    "xz":  []
+    "xz": []
 }
     queue = deque([[start]])
     visited = {start}
