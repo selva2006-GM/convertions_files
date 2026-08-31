@@ -76,9 +76,33 @@ def txt_to_html(current_file, next_file):
         file.write(html)
 
 
+
+def jpg_to_pdf(current_file, next_file):
+    print(current_file, "->", next_file)
+
+    image = fitz.open(current_file)
+
+    pdf = fitz.open()
+
+    page = pdf.new_page(
+        width=image[0].rect.width,
+        height=image[0].rect.height
+    )
+
+    page.insert_image(
+        page.rect,
+        filename=current_file
+    )
+
+    pdf.save(next_file)
+
+    image.close()
+    pdf.close()
+
 CONVERTERS = {
     ("txt", "pdf"): txt_to_pdf,
     ("pdf", "txt"): pdf_to_txt,
     ("txt", "html"): txt_to_html,
     ("pdf", "html"): pdf_to_html,
+    ("jpg", "pdf"): jpg_to_pdf,
 }

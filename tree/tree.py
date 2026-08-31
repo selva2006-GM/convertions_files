@@ -17,7 +17,7 @@ def find_path(start, target):
     "xml": [],
     "json":[],
     "png": [],
-    "jpg": [],
+    "jpg": ["pdf"],
     "jpeg":[],
     "gif": [],
     "bmp": [],
