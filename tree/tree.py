@@ -4,7 +4,7 @@ def find_path(start, target):
     graph = {
     "txt": ["pdf", "html"],
     "pdf": ["txt","html"],
-    "html": ["pdf", ],
+    "html": ["pdf"],
     "docx": [],
     "doc": [],
     "rtf": [],
