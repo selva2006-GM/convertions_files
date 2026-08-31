@@ -1,6 +1,7 @@
 from reportlab.pdfgen import canvas
 import fitz
-from playwright.sync_api import sync_playwright
+
+
 
 def pdf_to_html(current_file, next_file):
     print(current_file, "->", next_file)
@@ -13,11 +14,12 @@ def pdf_to_html(current_file, next_file):
         html_parts.append(page.get_text("html"))
 
     with open(next_file, "w", encoding="utf-8") as file:
-        file.write("\n".join(html_parts))
+        file.write(
+            "\n".join(html_parts)
+        )
 
     pdf.close()
-
-
+    
 def txt_to_pdf(current_file, next_file):
     print(current_file, "->", next_file)
 
@@ -74,33 +76,9 @@ def txt_to_html(current_file, next_file):
         file.write(html)
 
 
-def html_to_pdf(current_file, next_file):
-    print(current_file, "->", next_file)
-
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-
-        page = browser.new_page()
-
-        page.goto(
-            f"file:///{current_file.replace(chr(92), '/')}",
-            wait_until="networkidle"
-        )
-
-        page.pdf(
-            path=next_file,
-            format="A4",
-            print_background=True
-        )
-
-        browser.close()
-
 CONVERTERS = {
     ("txt", "pdf"): txt_to_pdf,
     ("pdf", "txt"): pdf_to_txt,
-
     ("txt", "html"): txt_to_html,
     ("pdf", "html"): pdf_to_html,
-
-    ("html", "pdf"): html_to_pdf,
 }
