@@ -3,8 +3,8 @@ from collections import deque
 def find_path(start, target):
     graph = {
 
-    "txt": ["pdf", "html"],
-    "pdf": ["txt", "html"],
+    "txt": [],
+    "pdf": [],
     "html": [],
 
     "docx": [],
@@ -23,8 +23,8 @@ def find_path(start, target):
     "json": [],
 
     # Images
-   "png": ["mp3", "wav", "aac", "flac", "ogg", "m4a", "wma", "aiff", "opus"],
-    "jpg": ["pdf"],
+   "png": [],
+    "jpg": [],
     "jpeg": [],
     "gif": [],
     "bmp": [],
@@ -46,15 +46,15 @@ def find_path(start, target):
     "3gp": [],
 
     # Audio → Image
-    "mp3": ["png"],
-    "wav": ["png"],
-    "aac": ["png"],
-    "flac": ["png"],
-    "ogg": ["png"],
-    "m4a": ["png"],
-    "wma": ["png"],
-    "aiff": ["png"],
-    "opus": ["png"],
+    "mp3": [],
+    "wav": [],
+    "aac": [],
+    "flac": [],
+    "ogg": [],
+    "m4a": [],
+    "wma": [],
+    "aiff": [],
+    "opus": [ ],
 
     # Programming
     "py": [],
