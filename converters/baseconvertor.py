@@ -1,8 +1,4 @@
 
-def p():
-    print()
-
-
 
 
 CONVERTERS = {
